@@ -20,7 +20,7 @@ der Layer sorgt dafür, dass Vite und Nitro sie mitübersetzen.
 ## Einbinden
 
 ```bash
-bun add git+ssh://git@github.com/AdrianSailerArt/cardTreasureCore.git#v0.1.0
+bun add git+ssh://git@github.com/AdrianSailerArt/cardTreasureCore.git#v0.1.1
 ```
 
 ```ts

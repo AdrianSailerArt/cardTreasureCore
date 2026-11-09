@@ -1,6 +1,6 @@
 {
   "name": "@cardtreasure/core",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "type": "module",
   "description": "Gemeinsamer Code f\u00fcr CardTreasure Shop und CMS: Fachmodule (Versand, Bilder) und ein Nuxt-Layer mit gemeinsamen UI-Bausteinen.",
@@ -26,7 +26,7 @@
     "sharp": "^0.34.5"
   },
   "peerDependencies": {
-    "drizzle-orm": ">=0.44",
+    "drizzle-orm": ">=0.45",
     "vue": ">=3.5",
     "nuxt": ">=4"
   },
@@ -40,7 +40,7 @@
   },
   "devDependencies": {
     "@types/bun": "latest",
-    "drizzle-orm": "^0.44.0",
+    "drizzle-orm": "^0.45.4",
     "typescript": "~5.9.0"
   }
 }
