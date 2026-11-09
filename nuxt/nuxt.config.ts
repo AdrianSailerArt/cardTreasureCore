@@ -1,6 +1,8 @@
 /*
  * Nuxt-Layer mit gemeinsamen UI-Bausteinen für Shop und CMS. Einbinden in nuxt.config:  extends: ['@cardtreasure/core/nuxt']
- *   components/atoms  → UiTable (Präfix Ui, wie die Atoms der Apps)
+ *   components/atoms  → UiButton, UiChip, UiField, UiInput, UiNotice, UiSegmented, UiSelect, UiTable (Präfix Ui)
+ *   components/base   → Tag, Panel (ohne Präfix)
+ *   assets/ui.css     → Color-Set, Formen, Fokus, label-caps; in der main.css der App importieren
  *   composables       → useDebounced, useChartTheme, chartBase
  *   Auto-Imports      → Versand (quoteShipping, shippingTariff …) und slugify, in Vue und auf dem Server
  * Fachmodule (Versand, Bilder …) werden direkt importiert:  import { quoteShipping } from '@cardtreasure/core/shipping'
@@ -11,7 +13,7 @@ const slug = { from: '@cardtreasure/core/slug', imports: ['slugify'] }
 
 export default defineNuxtConfig({
   imports: { presets: [shipping, slug] },
-  components: [{ path: './components/atoms', prefix: 'Ui' }],
+  components: [{ path: './components/atoms', prefix: 'Ui' }, { path: './components/base' }],
   // Fachmodule kommen fertig übersetzt aus dist/ (JavaScript + Typen), nur der Layer selbst ist Quelltext
   nitro: { imports: { presets: [shipping, slug] } },
 })
