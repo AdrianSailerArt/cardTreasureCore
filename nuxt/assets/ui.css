@@ -9,9 +9,26 @@
 /* Tailwind soll auch die Klassen der Layer-Komponenten finden (liegen in node_modules) */
 @source "../components";
 
+/* Schrift Geist von Vercel (SIL Open Font License, siehe fonts/LICENSE-Geist.txt), lokal ausgeliefert,
+   keine externe Einbindung. Variable Schnitte: eine Datei für alle Stärken 100–900. */
+@font-face {
+  font-family: "Geist";
+  src: url("./fonts/Geist-Variable.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Geist Mono";
+  src: url("./fonts/GeistMono-Variable.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
 @theme {
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-serif: "Cormorant Garamond", ui-serif, Georgia, serif;
+  --font-sans: "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
 
   /* Formensprache: kantig mit knappem Radius (angelehnt an tribe-online). Kreise nur für runde Dinge
      (Symbole, Medaillen, Avatare, Radio-Punkte) über rounded-full. */
@@ -29,7 +46,7 @@
     @apply bg-bg text-fg antialiased;
   }
   h1, h2, h3 {
-    @apply font-serif tracking-tight;
+    @apply font-display;
   }
   /* Sichtbarer Fokus für Tastatur überall (Maus-Klicks zeigen keinen Ring) */
   :focus-visible {
@@ -39,6 +56,13 @@
   input:focus-visible, select:focus-visible, textarea:focus-visible {
     outline-offset: 0;
   }
+}
+
+/* Auszeichnungsschrift für Überschriften, Logo, große Zahlen: Geist sehr kräftig und eng (wie tribe-online) */
+@utility font-display {
+  font-family: var(--font-sans);
+  font-weight: 800;
+  letter-spacing: -0.03em;
 }
 
 /* Kleine Kennzeichnung in Versalien mit Laufweite (Abschnittstitel, Spaltenköpfe, Etiketten) */
