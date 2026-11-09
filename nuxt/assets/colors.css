@@ -52,7 +52,7 @@
   --color-accent: var(--palette-gold-700); /* als Text ≥ 4,5:1 */
   --color-accent-strong: var(--palette-gold-800);
   --color-accent-soft: color-mix(in oklab, var(--palette-gold-400) 20%, transparent);
-  --color-on-accent: var(--palette-ink-950);
+  --color-on-accent: var(--palette-ink-50);
   --color-primary: var(--palette-ink-900);
   --color-on-primary: var(--palette-ink-50);
 
@@ -126,7 +126,7 @@
     --color-surface: var(--palette-ink-900);
     --color-surface-muted: var(--palette-ink-800);
     --color-line: var(--palette-ink-800);
-    --color-line-strong: var(--palette-ink-700);
+    --color-line-strong: var(--palette-ink-500); /* 3:1 für Feldrahmen */
 
     --color-fg: var(--palette-ink-100);
     --color-fg-muted: var(--palette-ink-300);
