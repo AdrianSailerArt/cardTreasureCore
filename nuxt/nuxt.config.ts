@@ -1,6 +1,6 @@
 /*
  * Nuxt-Layer mit gemeinsamen UI-Bausteinen für Shop und CMS. Einbinden in nuxt.config:  extends: ['@cardtreasure/core/nuxt']
- *   components/atoms  → UiButton, UiChip, UiField, UiInput, UiNotice, UiSegmented, UiSelect, UiTable (Präfix Ui)
+ *   components/atoms  → UiButton, UiChip, UiCombobox, UiField, UiInput, UiNotice, UiSegmented, UiSelect, UiTable (Präfix Ui)
  *   components/base   → Tag, Panel, PageHeader, Stat, StatusTag, EmptyState, CountryFlag, ChartFrame, Breadcrumbs, KeyValueList
  *   composables       → useUiLocale, useUiFormat (Formatierung und Status-Wortschatz in der aktuellen Sprache)
  *   assets/ui.css     → Color-Set, Formen, Fokus, label-caps; in der main.css der App importieren
