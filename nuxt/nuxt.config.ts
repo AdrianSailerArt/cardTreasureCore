@@ -12,7 +12,6 @@ const slug = { from: '@cardtreasure/core/slug', imports: ['slugify'] }
 export default defineNuxtConfig({
   imports: { presets: [shipping, slug] },
   components: [{ path: './components/atoms', prefix: 'Ui' }],
-  // Das Paket liefert TypeScript-Quellen; Vite und Nitro sollen es mitübersetzen statt als fertiges Modul behandeln
-  build: { transpile: ['@cardtreasure/core'] },
-  nitro: { externals: { inline: ['@cardtreasure/core'] }, imports: { presets: [shipping, slug] } },
+  // Fachmodule kommen fertig übersetzt aus dist/ (JavaScript + Typen), nur der Layer selbst ist Quelltext
+  nitro: { imports: { presets: [shipping, slug] } },
 })

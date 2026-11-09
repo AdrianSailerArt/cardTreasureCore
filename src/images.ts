@@ -4,7 +4,7 @@
  * Ablauf beim Hochladen: Bild verarbeiten → Dateien speichern → Datenbank; schlägt die Datenbank fehl, werden die Dateien wieder gelöscht.
  */
 import { sql, type SQL } from 'drizzle-orm'
-import { MediaError, mediaKey, processImage, type MediaStore } from './media'
+import { MediaError, mediaKey, processImage, type MediaStore } from './media.js'
 
 /** Nur was beide Apps gemeinsam haben: eine Drizzle-Datenbank mit execute und transaction */
 export interface SqlDb {

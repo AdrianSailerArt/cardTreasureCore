@@ -1,4 +1,4 @@
-import { lanAddresses } from './lan'
+import { lanAddresses } from './lan.js'
 
 /**
  * Herkünfte, denen die Anmeldung (Better Auth trustedOrigins) in der Entwicklung vertraut: localhost und die

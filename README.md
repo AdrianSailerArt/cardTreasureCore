@@ -14,13 +14,13 @@ Was beide Apps brauchen, liegt einmal hier statt als Kopie in zwei Repos.
 | `@cardtreasure/core/lan`, `…/dev-origins` | LAN-Adresse finden, vertrauenswürdige Herkünfte für die Entwicklung |
 | `@cardtreasure/core/nuxt` | Nuxt-Layer: `UiTable`, `useDebounced`, `useChartTheme`, `chartBase` |
 
-Die Module haben keine Nuxt-Abhängigkeit (außer dem Layer) und werden als TypeScript-Quellen ausgeliefert;
-der Layer sorgt dafür, dass Vite und Nitro sie mitübersetzen.
+Die Module haben keine Nuxt-Abhängigkeit (außer dem Layer). Sie werden als fertiges JavaScript mit Typen aus `dist/` ausgeliefert
+(Nitro übersetzt kein TypeScript aus `node_modules`); `dist/` liegt deshalb mit im Repo. Der Nuxt-Layer bleibt Quelltext, den übersetzt Nuxt.
 
 ## Einbinden
 
 ```bash
-bun add git+ssh://git@github.com/AdrianSailerArt/cardTreasureCore.git#v0.1.2
+bun add git+ssh://git@github.com/AdrianSailerArt/cardTreasureCore.git#v0.2.0
 ```
 
 ```ts
@@ -33,11 +33,11 @@ Auf Vercel braucht der Build Lesezugriff auf dieses private Repo (Deploy-Key ode
 
 ## Ändern und veröffentlichen
 
-1. Hier ändern, `bun test` und `bun run typecheck`.
-2. Version in `package.json` erhöhen, committen, taggen: `git tag v0.1.1 && git push --tags`.
-3. In Shop und CMS die neue Version eintragen: `bun add git+ssh://git@github.com/AdrianSailerArt/cardTreasureCore.git#v0.1.2`.
+1. In `src/` bzw. `nuxt/` ändern, dann `bun run release` (baut `dist/` und testet) und `bun run typecheck`.
+2. Version in `package.json` erhöhen, committen (mit `dist/`), taggen: `git tag v0.2.1 && git push && git push --tags`.
+3. In Shop und CMS die neue Version eintragen: `bun add git+ssh://git@github.com/AdrianSailerArt/cardTreasureCore.git#v0.2.0`.
 
-Lokal gleichzeitig an Paket und App arbeiten: `bun link` hier, `bun link @cardtreasure/core` in der App.
+Wichtig: Relative Importe in `src/` mit `.js`-Endung schreiben (`./media.js`), damit das übersetzte JavaScript auch in Node läuft.
 
 ## Befehle
 

@@ -1,25 +1,45 @@
 {
   "name": "@cardtreasure/core",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "private": true,
   "type": "module",
-  "description": "Gemeinsamer Code f\u00fcr CardTreasure Shop und CMS: Fachmodule (Versand, Bilder) und ein Nuxt-Layer mit gemeinsamen UI-Bausteinen.",
+  "description": "Gemeinsamer Code für CardTreasure Shop und CMS: Fachmodule (Versand, Bilder) und ein Nuxt-Layer mit gemeinsamen UI-Bausteinen.",
   "exports": {
-    "./shipping": "./src/shipping.ts",
-    "./slug": "./src/slug.ts",
-    "./lan": "./src/lan.ts",
-    "./dev-origins": "./src/dev-origins.ts",
-    "./media": "./src/media.ts",
-    "./images": "./src/images.ts",
+    "./shipping": {
+      "types": "./dist/shipping.d.ts",
+      "default": "./dist/shipping.js"
+    },
+    "./slug": {
+      "types": "./dist/slug.d.ts",
+      "default": "./dist/slug.js"
+    },
+    "./lan": {
+      "types": "./dist/lan.d.ts",
+      "default": "./dist/lan.js"
+    },
+    "./dev-origins": {
+      "types": "./dist/dev-origins.d.ts",
+      "default": "./dist/dev-origins.js"
+    },
+    "./media": {
+      "types": "./dist/media.d.ts",
+      "default": "./dist/media.js"
+    },
+    "./images": {
+      "types": "./dist/images.d.ts",
+      "default": "./dist/images.js"
+    },
     "./nuxt": "./nuxt/nuxt.config.ts"
   },
   "files": [
-    "src",
+    "dist",
     "nuxt"
   ],
   "scripts": {
+    "build": "rm -rf dist && tsc -p tsconfig.build.json",
     "test": "bun test",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "release": "bun run build && bun test"
   },
   "peerDependencies": {
     "drizzle-orm": ">=0.45",
@@ -38,9 +58,10 @@
   },
   "devDependencies": {
     "@types/bun": "latest",
-    "drizzle-orm": "^0.45.4",
-    "typescript": "~5.9.0",
+    "@types/node": "^26.6.6",
     "aws4fetch": "^1.0.20",
-    "sharp": "^0.34.5"
+    "drizzle-orm": "^0.45.4",
+    "sharp": "^0.34.5",
+    "typescript": "~5.9.0"
   }
 }
