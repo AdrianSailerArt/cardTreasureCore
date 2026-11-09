@@ -17,11 +17,11 @@ const rows = computed(() => (slots.head ? '[&_tbody_tr]:border-t' : '[&_tbody_tr
 <template>
   <div class="overflow-x-auto" :class="framed ? 'rounded-xl border border-line bg-surface' : ''">
     <table
-      class="w-full text-left text-sm [&_th]:font-normal [&_tbody_tr]:border-line"
+      class="w-full text-left text-small [&_th]:font-normal [&_tbody_tr]:border-line"
       :class="[cells, rows]"
       :style="minWidth ? { minWidth: `${minWidth}px` } : undefined"
     >
-      <thead v-if="$slots.head" class="text-xs uppercase tracking-wider text-fg-subtle" :class="framed ? 'bg-surface-muted' : ''">
+      <thead v-if="$slots.head" class="text-label text-fg-subtle" :class="framed ? 'bg-surface-muted' : ''">
         <tr><slot name="head" /></tr>
       </thead>
       <tbody>

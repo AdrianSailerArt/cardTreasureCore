@@ -10,7 +10,7 @@ const model = defineModel<T>({ required: true })
       v-for="o in options"
       :key="String(o.value)"
       type="button"
-      class="min-h-8 rounded-sm px-3 text-[11px] font-semibold uppercase tracking-[0.08em] transition"
+      class="min-h-8 rounded-sm px-3 text-button-sm transition"
       :class="model === o.value ? 'bg-primary text-on-primary' : 'text-fg-muted hover:text-fg'"
       :aria-pressed="model === o.value ? 'true' : 'false'"
       @click="model = o.value"

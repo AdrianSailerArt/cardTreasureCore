@@ -8,7 +8,7 @@ withDefaults(defineProps<{
 }>(), { type: 'text', mono: false })
 
 const model = defineModel<string>({ default: '' })
-const classes = 'w-full min-h-10 rounded-md border border-line-strong bg-bg px-3 py-2 text-sm text-fg placeholder:text-fg-subtle focus:border-accent'
+const classes = 'w-full min-h-10 rounded-md border border-line-strong bg-bg px-3 py-2 text-small text-fg placeholder:text-fg-subtle focus:border-accent'
 </script>
 
 <template>

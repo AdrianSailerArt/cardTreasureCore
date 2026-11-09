@@ -10,8 +10,8 @@ defineProps<{ title: string, eyebrow?: string | null, description?: string | nul
   <header class="flex flex-wrap items-end justify-between gap-x-6 gap-y-4">
     <div class="min-w-0 max-w-3xl">
       <slot name="above" />
-      <p v-if="eyebrow" class="label-caps text-accent">{{ eyebrow }}</p>
-      <h1 class="mt-1 text-4xl text-balance sm:text-5xl">{{ title }}</h1>
+      <p v-if="eyebrow" class="text-eyebrow text-accent">{{ eyebrow }}</p>
+      <h1 class="mt-1 text-headline text-balance">{{ title }}</h1>
       <p v-if="description" class="mt-2 text-fg-muted">{{ description }}</p>
       <slot name="below" />
     </div>

@@ -10,7 +10,7 @@ const PAD = { none: '', sm: 'p-4', md: 'p-5' }
 <template>
   <component :is="as" class="rounded-lg border border-line bg-surface" :class="PAD[padding]">
     <div v-if="title || $slots.actions" class="mb-4 flex flex-wrap items-center justify-between gap-3" :class="{ 'px-5 pt-5': padding === 'none' }">
-      <h2 v-if="title" class="text-xl">{{ title }}</h2>
+      <h2 v-if="title" class="text-heading">{{ title }}</h2>
       <slot name="actions" />
     </div>
     <slot />

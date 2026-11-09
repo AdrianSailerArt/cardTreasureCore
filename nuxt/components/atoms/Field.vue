@@ -5,8 +5,8 @@ defineProps<{ label: string, hint?: string }>()
 
 <template>
   <label class="block">
-    <span class="mb-1 block text-xs uppercase tracking-wider text-fg-subtle">{{ label }}</span>
+    <span class="mb-1 block text-label text-fg-subtle">{{ label }}</span>
     <slot />
-    <span v-if="hint" class="mt-1 block text-xs text-fg-subtle">{{ hint }}</span>
+    <span v-if="hint" class="mt-1 block text-meta text-fg-subtle">{{ hint }}</span>
   </label>
 </template>

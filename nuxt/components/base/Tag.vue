@@ -35,7 +35,7 @@ const TONES: Record<TagTone, string> = {
 
 <template>
   <span
-    class="inline-flex items-center gap-1 whitespace-nowrap rounded-sm px-1.5 py-1 text-[11px] font-semibold leading-none"
+    class="inline-flex items-center gap-1 whitespace-nowrap rounded-sm px-1.5 py-1 text-tag"
     :class="[TONES[tone], { 'uppercase tracking-[0.08em]': caps }]"
     :title="title"
   >

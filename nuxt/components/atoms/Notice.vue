@@ -5,7 +5,7 @@ const toneClass = { success: 'text-success', warning: 'text-warning', danger: 't
 </script>
 
 <template>
-  <p class="text-sm" :class="toneClass[tone]" :role="tone === 'danger' ? 'alert' : 'status'">
+  <p class="text-small" :class="toneClass[tone]" :role="tone === 'danger' ? 'alert' : 'status'">
     <slot />
   </p>
 </template>

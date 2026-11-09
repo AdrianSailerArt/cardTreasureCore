@@ -12,8 +12,8 @@ withDefaults(defineProps<{
   disabled?: boolean
 }>(), { variant: 'primary', size: 'md', type: 'button', disabled: false })
 
-const BASE = 'inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-semibold uppercase tracking-[0.08em] transition'
-const SIZES = { sm: 'min-h-8 px-3 text-[11px]', md: 'min-h-10 px-4 text-xs', lg: 'min-h-12 px-6 text-sm' }
+const BASE = 'inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md transition'
+const SIZES = { sm: 'min-h-8 px-3 text-button-sm', md: 'min-h-10 px-4 text-button', lg: 'min-h-12 px-6 text-button-lg' }
 const VARIANTS = {
   primary: 'bg-primary text-on-primary hover:opacity-90',
   ghost: 'bg-surface-muted text-fg hover:text-accent',

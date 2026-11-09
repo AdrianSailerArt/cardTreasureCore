@@ -7,7 +7,7 @@ defineProps<{ title?: string | null }>()
   <div class="flex flex-wrap items-center justify-between gap-4 rounded-lg border border-dashed border-line-strong px-5 py-4" role="status">
     <div class="min-w-0">
       <p v-if="title" class="font-semibold">{{ title }}</p>
-      <p class="text-sm text-fg-muted"><slot /></p>
+      <p class="text-small text-fg-muted"><slot /></p>
     </div>
     <div v-if="$slots.action" class="shrink-0"><slot name="action" /></div>
   </div>

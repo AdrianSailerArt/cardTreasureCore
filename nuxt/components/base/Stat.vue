@@ -12,16 +12,16 @@ withDefaults(defineProps<{
   change?: { text: string, up: boolean } | null
   hint?: string | null
 }>(), { size: 'md', framed: false })
-const SIZE = { sm: 'text-base font-medium', md: 'text-xl font-semibold', lg: 'font-display text-3xl' }
+const SIZE = { sm: 'text-body font-medium', md: 'text-value', lg: 'text-figure' }
 </script>
 
 <template>
   <dl :class="framed ? 'rounded-lg border border-line bg-surface p-5' : ''">
-    <dt class="label-caps text-fg-subtle">{{ label }}</dt>
+    <dt class="text-label text-fg-subtle">{{ label }}</dt>
     <dd class="mt-1 tabular-nums" :class="SIZE[size]">{{ value }}</dd>
-    <dd v-if="change" class="mt-1 text-xs font-medium" :class="change.up ? 'text-success' : 'text-danger'">
+    <dd v-if="change" class="mt-1 text-meta font-medium" :class="change.up ? 'text-success' : 'text-danger'">
       <span aria-hidden="true">{{ change.up ? '▲' : '▼' }}</span> {{ change.text }}
     </dd>
-    <dd v-if="hint" class="mt-1 text-xs text-fg-subtle">{{ hint }}</dd>
+    <dd v-if="hint" class="mt-1 text-meta text-fg-subtle">{{ hint }}</dd>
   </dl>
 </template>

@@ -53,7 +53,7 @@ const onKey = (e: KeyboardEvent) => {
       :aria-controls="`${id}-list`"
       :aria-activedescendant="expanded && active >= 0 ? `${id}-opt-${active}` : undefined"
       :placeholder="placeholder"
-      class="min-h-10 w-full rounded-md border border-line-strong bg-bg px-3 py-2 text-sm text-fg placeholder:text-fg-subtle focus:border-accent"
+      class="min-h-10 w-full rounded-md border border-line-strong bg-bg px-3 py-2 text-small text-fg placeholder:text-fg-subtle focus:border-accent"
       @keydown="onKey"
       @focus="open = true"
       @blur="open = false"
@@ -62,7 +62,7 @@ const onKey = (e: KeyboardEvent) => {
       v-show="expanded"
       :id="`${id}-list`"
       role="listbox"
-      class="absolute right-0 z-20 mt-1 max-h-72 overflow-auto rounded-md border border-line bg-surface py-1 text-sm shadow-lg"
+      class="absolute right-0 z-20 mt-1 max-h-72 overflow-auto rounded-md border border-line bg-surface py-1 text-small shadow-lg"
       :class="listClass"
     >
       <li
@@ -78,7 +78,7 @@ const onKey = (e: KeyboardEvent) => {
         @click="choose(item)"
       >
         {{ item.label }}
-        <span v-if="item.hint" class="block text-xs text-fg-subtle">{{ item.hint }}</span>
+        <span v-if="item.hint" class="block text-meta text-fg-subtle">{{ item.hint }}</span>
       </li>
     </ul>
     <p class="sr-only" aria-live="polite">{{ expanded ? `${items.length} ${locale === 'en' ? 'results' : 'Treffer'}` : '' }}</p>

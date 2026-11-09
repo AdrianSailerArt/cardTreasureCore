@@ -39,6 +39,56 @@
   --radius-xl: 4px;
   --radius-2xl: 6px;
   --radius-3xl: 8px;
+
+  /* Schrift nach Rolle (sprechende Namen statt text-small/text-4xl). Jede Stufe trägt Größe, Zeilenhöhe, Stärke und Laufweite;
+     die großen wachsen fließend mit der Breite (clamp), Seiten brauchen dafür keine sm:-Varianten. */
+  --text-hero: clamp(3rem, 2.4rem + 2.4vw, 3.75rem);
+  --text-hero--line-height: 1.02;
+  --text-hero--font-weight: 800;
+  --text-hero--letter-spacing: -0.035em;
+  --text-headline: clamp(2.25rem, 1.85rem + 1.6vw, 3rem);
+  --text-headline--line-height: 1.05;
+  --text-headline--font-weight: 800;
+  --text-headline--letter-spacing: -0.03em;
+  --text-section: clamp(1.875rem, 1.65rem + 0.9vw, 2.25rem);
+  --text-section--line-height: 1.12;
+  --text-section--font-weight: 800;
+  --text-section--letter-spacing: -0.03em;
+  --text-title: 1.5rem;
+  --text-title--line-height: 1.25;
+  --text-title--font-weight: 800;
+  --text-title--letter-spacing: -0.025em;
+  --text-heading: 1.25rem;
+  --text-heading--line-height: 1.3;
+  --text-heading--font-weight: 800;
+  --text-heading--letter-spacing: -0.02em;
+  --text-logo: 1.5rem;
+  --text-logo--line-height: 1;
+  --text-logo--font-weight: 800;
+  --text-logo--letter-spacing: -0.03em;
+  --text-figure: clamp(1.875rem, 1.65rem + 0.9vw, 2.25rem);
+  --text-figure--line-height: 1.1;
+  --text-figure--font-weight: 800;
+  --text-figure--letter-spacing: -0.03em;
+  --text-price: 1.125rem;
+  --text-price--line-height: 1.3;
+  --text-price--font-weight: 600;
+  --text-value: 1.125rem;
+  --text-value--line-height: 1.3;
+  --text-value--font-weight: 600;
+  --text-lead: 1.125rem;
+  --text-lead--line-height: 1.65;
+  --text-body: 1rem;
+  --text-body--line-height: 1.65;
+  --text-small: 0.875rem;
+  --text-small--line-height: 1.45;
+  --text-meta: 0.75rem;
+  --text-meta--line-height: 1.35;
+  --text-micro: 0.625rem;
+  --text-micro--line-height: 1.2;
+  --text-tag: 0.6875rem;
+  --text-tag--line-height: 1;
+  --text-tag--font-weight: 600;
 }
 
 @layer base {
@@ -58,16 +108,45 @@
   }
 }
 
-/* Auszeichnungsschrift für Überschriften, Logo, große Zahlen: Geist sehr kräftig und eng (wie tribe-online) */
+/* Geist sehr kräftig und eng (wie tribe-online), für Elemente ohne eigene Stufe */
 @utility font-display {
   font-family: var(--font-sans);
   font-weight: 800;
   letter-spacing: -0.03em;
 }
 
-/* Kleine Kennzeichnung in Versalien mit Laufweite (Abschnittstitel, Spaltenköpfe, Etiketten) */
-@utility label-caps {
-  font-size: 11px;
+/* Kennzeichnungen in Versalien mit Laufweite: als eigene Utilities, weil sie auch die Schreibweise festlegen */
+@utility text-eyebrow {
+  font-size: 0.75rem;
+  line-height: 1.35;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+@utility text-label {
+  font-size: 0.6875rem;
+  line-height: 1.45;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+@utility text-button-sm {
+  font-size: 0.6875rem;
+  line-height: 1;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+@utility text-button {
+  font-size: 0.75rem;
+  line-height: 1;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+@utility text-button-lg {
+  font-size: 0.875rem;
+  line-height: 1;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.08em;
