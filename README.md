@@ -11,8 +11,10 @@ Was beide Apps brauchen, liegt einmal hier statt als Kopie in zwei Repos.
 | `@cardtreasure/core/media` | Bilder verarbeiten (WebP, Vorschau, ohne EXIF/GPS), S3-Speicher (SeaweedFS lokal, S3/R2 später) |
 | `@cardtreasure/core/images` | Angebotsfotos und ersetzte Kartenbilder (nur SQL, Datenbank wird übergeben) |
 | `@cardtreasure/core/slug` | `slugify` |
+| `@cardtreasure/core/format` | `formatPrice`, `formatNumber`, `formatDate`, `formatRate`, `countryName` (Sprache als Parameter) |
+| `@cardtreasure/core/status` | Status-Wortschatz: `statusTone` (Ampel), `statusLabel` (de/en) |
 | `@cardtreasure/core/lan`, `…/dev-origins` | LAN-Adresse finden, vertrauenswürdige Herkünfte für die Entwicklung |
-| `@cardtreasure/core/nuxt` | Nuxt-Layer: Atoms (`UiButton`, `UiChip`, `UiField`, `UiInput`, `UiNotice`, `UiSegmented`, `UiSelect`, `UiTable`), `Tag`, `Panel`, `useDebounced`, `useChartTheme`, `chartBase` |
+| `@cardtreasure/core/nuxt` | Nuxt-Layer: Atoms (`UiButton`, `UiChip`, `UiField`, `UiInput`, `UiNotice`, `UiSegmented`, `UiSelect`, `UiTable`), Components (`Tag`, `Panel`, `PageHeader`, `Stat`, `StatusTag`, `EmptyState`, `CountryFlag`, `ChartFrame`, `Breadcrumbs`, `KeyValueList`), `useUiLocale`, `useUiFormat`, `useDebounced`, `useChartTheme`, `chartBase` |
 | `@cardtreasure/core/nuxt/assets/ui.css` | Color-Set, Schrift Geist (lokal, OFL), Formensprache (knapper Radius), sichtbarer Fokus, `font-display`, `label-caps` |
 
 Die Module haben keine Nuxt-Abhängigkeit (außer dem Layer). Sie werden als fertiges JavaScript mit Typen aus `dist/` ausgeliefert
@@ -21,7 +23,7 @@ Die Module haben keine Nuxt-Abhängigkeit (außer dem Layer). Sie werden als fer
 ## Einbinden
 
 ```bash
-bun add git+ssh://git@github.com/AdrianSailerArt/cardTreasureCore.git#v0.3.1
+bun add git+ssh://git@github.com/AdrianSailerArt/cardTreasureCore.git#v0.4.0
 ```
 
 ```ts
@@ -45,7 +47,7 @@ Auf Vercel braucht der Build Lesezugriff auf dieses private Repo (Deploy-Key ode
 
 1. In `src/` bzw. `nuxt/` ändern, dann `bun run release` (baut `dist/` und testet) und `bun run typecheck`.
 2. Version in `package.json` erhöhen, committen (mit `dist/`), taggen: `git tag v0.2.1 && git push && git push --tags`.
-3. In Shop und CMS die neue Version eintragen: `bun add git+ssh://git@github.com/AdrianSailerArt/cardTreasureCore.git#v0.3.1`.
+3. In Shop und CMS die neue Version eintragen: `bun add git+ssh://git@github.com/AdrianSailerArt/cardTreasureCore.git#v0.4.0`.
 
 Wichtig: Relative Importe in `src/` mit `.js`-Endung schreiben (`./media.js`), damit das übersetzte JavaScript auch in Node läuft.
 

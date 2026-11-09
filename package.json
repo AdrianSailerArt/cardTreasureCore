@@ -1,6 +1,6 @@
 {
   "name": "@cardtreasure/core",
-  "version": "0.3.1",
+  "version": "0.4.0",
   "private": true,
   "type": "module",
   "description": "Gemeinsamer Code für CardTreasure Shop und CMS: Fachmodule (Versand, Bilder) und ein Nuxt-Layer mit gemeinsamen UI-Bausteinen.",
@@ -31,7 +31,15 @@
     },
     "./nuxt": "./nuxt/nuxt.config.ts",
     "./nuxt/assets/*": "./nuxt/assets/*",
-    "./nuxt/components/*": "./nuxt/components/*"
+    "./nuxt/components/*": "./nuxt/components/*",
+    "./format": {
+      "types": "./dist/format.d.ts",
+      "default": "./dist/format.js"
+    },
+    "./status": {
+      "types": "./dist/status.d.ts",
+      "default": "./dist/status.js"
+    }
   },
   "files": [
     "dist",
@@ -48,7 +56,9 @@
     "vue": ">=3.5",
     "nuxt": ">=4",
     "sharp": ">=0.34",
-    "aws4fetch": ">=1.0"
+    "aws4fetch": ">=1.0",
+    "vue-echarts": "*",
+    "echarts": "*"
   },
   "peerDependenciesMeta": {
     "nuxt": {
