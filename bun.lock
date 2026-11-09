@@ -4,18 +4,18 @@
   "workspaces": {
     "": {
       "name": "@cardtreasure/core",
-      "dependencies": {
-        "aws4fetch": "^1.0.20",
-        "sharp": "^0.34.5",
-      },
       "devDependencies": {
         "@types/bun": "latest",
+        "aws4fetch": "^1.0.20",
         "drizzle-orm": "^0.45.4",
+        "sharp": "^0.34.5",
         "typescript": "~5.9.0",
       },
       "peerDependencies": {
+        "aws4fetch": ">=1.0",
         "drizzle-orm": ">=0.45",
         "nuxt": ">=4",
+        "sharp": ">=0.34",
         "vue": ">=3.5",
       },
       "optionalPeers": [
