@@ -23,7 +23,7 @@ Die Module haben keine Nuxt-Abhängigkeit (außer dem Layer). Sie werden als fer
 ## Einbinden
 
 ```bash
-bun add git+ssh://git@github.com/AdrianSailerArt/cardTreasureCore.git#v0.4.1
+bun add git+ssh://git@github.com/AdrianSailerArt/cardTreasureCore.git#v0.4.2
 ```
 
 ```ts
@@ -47,7 +47,7 @@ Auf Vercel braucht der Build Lesezugriff auf dieses private Repo (Deploy-Key ode
 
 1. In `src/` bzw. `nuxt/` ändern, dann `bun run release` (baut `dist/` und testet) und `bun run typecheck`.
 2. Version in `package.json` erhöhen, committen (mit `dist/`), taggen: `git tag v0.2.1 && git push && git push --tags`.
-3. In Shop und CMS die neue Version eintragen: `bun add git+ssh://git@github.com/AdrianSailerArt/cardTreasureCore.git#v0.4.1`.
+3. In Shop und CMS die neue Version eintragen: `bun add git+ssh://git@github.com/AdrianSailerArt/cardTreasureCore.git#v0.4.2`.
 
 Wichtig: Relative Importe in `src/` mit `.js`-Endung schreiben (`./media.js`), damit das übersetzte JavaScript auch in Node läuft.
 

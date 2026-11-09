@@ -3,7 +3,8 @@
  *
  * Komponenten verwenden nur die semantischen Tokens aus @theme, z.B. bg-surface, text-fg-muted,
  * border-line, text-accent, bg-danger-soft. Keine Palette, keine rohen Tailwind-Farben, keine dark:-Farben.
- * Hell/Dunkel wird hier zentral umgeschaltet.
+ * Hell/Dunkel wird hier zentral umgeschaltet. Kontrast (WCAG 2.2 AA) in beiden Modi geprüft: Text ≥ 4,5:1,
+ * auch Tag-Text auf seiner Tönung; Feldrahmen und Fokus ≥ 3:1.
  */
 
 /* 1. Palette: Rohtöne, nur in dieser Datei verwenden */
@@ -25,6 +26,7 @@
   --palette-gold-500: #b8954a;
   --palette-gold-600: #957637;
   --palette-gold-700: #7a5f2a;
+  --palette-gold-800: #5f4a20;
 }
 
 /* 2. Semantische Tokens (hell) */
@@ -40,23 +42,23 @@
   /* Abdunkelung hinter Dialogen */
   --color-overlay: rgb(13 12 10 / 0.55);
   --color-line: var(--palette-ink-200);
-  --color-line-strong: var(--palette-ink-300);
+  --color-line-strong: var(--palette-ink-400); /* 3:1 für Feldrahmen */
 
   --color-fg: var(--palette-ink-900);
   --color-fg-muted: var(--palette-ink-600);
   --color-fg-subtle: var(--palette-ink-500);
   --color-fg-faint: var(--palette-ink-300);
 
-  --color-accent: var(--palette-gold-600);
-  --color-accent-strong: var(--palette-gold-700);
+  --color-accent: var(--palette-gold-700); /* als Text ≥ 4,5:1 */
+  --color-accent-strong: var(--palette-gold-800);
   --color-accent-soft: color-mix(in oklab, var(--palette-gold-400) 20%, transparent);
   --color-on-accent: var(--palette-ink-950);
   --color-primary: var(--palette-ink-900);
   --color-on-primary: var(--palette-ink-50);
 
-  --color-success: #2f7d4f;
+  --color-success: #25663f;
   --color-success-soft: #e3f2e8;
-  --color-warning: #a8681a;
+  --color-warning: #8a5410;
   --color-warning-soft: #fbf0dc;
   --color-danger: #b83232;
   --color-danger-soft: #fbe8e8;
@@ -64,13 +66,13 @@
   --color-info-soft: #e5eff9;
 
   /* Kartenzustand als Ampel: Grün (neuwertig) → Gelb (gebraucht) → Rot (stark bespielt) */
-  --color-cond-mint: #17703f;
-  --color-cond-near-mint: #2f8f45;
-  --color-cond-excellent: #6b8a12;
-  --color-cond-good: #a57c00;
-  --color-cond-light-played: #c4620f;
-  --color-cond-played: #c0451c;
-  --color-cond-poor: #b32d2d;
+  --color-cond-mint: #146438;
+  --color-cond-near-mint: #21692f;
+  --color-cond-excellent: #4e6a0e;
+  --color-cond-good: #765900;
+  --color-cond-light-played: #9a4a09;
+  --color-cond-played: #a83b16;
+  --color-cond-poor: #a82a2a;
 
   /* Medaillen und Verkäufer-Stufen */
   --color-medal-bronze: #9a5b2e;
