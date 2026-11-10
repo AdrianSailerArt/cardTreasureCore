@@ -3,6 +3,7 @@ import type { Game, Price } from '@cardtreasure/core/catalog'
 import type { CardHit } from './CardPicker.vue'
 import type { ListingValues } from './ListingForm.vue'
 import type { PickablePrinting } from './PrintingPicker.vue'
+import type { SealedHit } from './SealedPicker.vue'
 
 /** Karte mit Drucken, wie sie die App für Schritt 2 und 3 lädt (Shop: /api/catalog/<game>/cards/<slug>). */
 export interface CreatorCard {
@@ -11,21 +12,26 @@ export interface CreatorCard {
 }
 /** Was beim Anlegen an die App geht */
 export type CreatorInput = Omit<ListingValues, 'comment' | 'storageLocation'> & { printingId: string, comment: string | null, storageLocation: string | null }
+/** Sealed: Zustand, Sprache und Variante stehen am Produkt */
+export interface CreatorSealedInput { productId: string, quantity: number, priceCents: number | null, comment: string | null, storageLocation: string | null }
 
 /**
- * Angebot anlegen in drei Schritten, gleich in Shop (Kunden) und CMS (Angebote von CardTreasure):
- * 1. Karte suchen, 2. Druck wählen, 3. Zustand, Sprache, Variante, Menge, Preis (mit Orientierung), Kommentar, Lagerplatz.
+ * Angebot anlegen, gleich in Shop (Kunden) und CMS (Angebote von CardTreasure):
+ *   Einzelkarte: 1. Karte suchen, 2. Druck wählen, 3. Zustand, Sprache, Variante, Menge, Preis (mit Orientierung), Kommentar, Lagerplatz.
+ *   Sealed (wenn `searchSealed` übergeben): 1. Produkt suchen, 2. Menge, Preis, Kommentar, Lagerplatz.
  * Suchen, Laden und Speichern übergibt die App; nach dem Anlegen bleibt die Karte gewählt, damit man weitere einstellen kann.
  */
 const props = withDefaults(defineProps<{
   search: (q: string, game?: Game) => Promise<CardHit[]>
   loadCard: (game: Game, slug: string) => Promise<CreatorCard>
-  create: (input: CreatorInput) => Promise<{ id: string }>
+  create: (input: CreatorInput | CreatorSealedInput) => Promise<{ id: string }>
+  /** Sealed-Suche; ohne sie gibt es nur Einzelkarten */
+  searchSealed?: (q: string, game?: Game) => Promise<SealedHit[]>
   /** Vorauswahl, z.B. von der Kartenseite (?game=&card=&printing=) */
   initial?: { game: Game, slug: string, printingId?: string | null } | null
   /** Ab diesem Preis Hinweis auf ein echtes Foto; leer = kein Hinweis */
   photoHintFromCents?: number | null
-}>(), { initial: null, photoHintFromCents: null })
+}>(), { initial: null, photoHintFromCents: null, searchSealed: undefined })
 const emit = defineEmits<{ created: [listing: { id: string, priceCents: number }] }>()
 defineSlots<{
   /** Unter dem Formular nach dem Anlegen, z.B. Fotos hochladen */
@@ -36,6 +42,11 @@ defineSlots<{
 
 const text = useListingText()
 const locale = useUiLocale()
+
+const kind = ref<'single' | 'sealed'>('single')
+const kindOptions = computed(() => [{ value: 'single' as const, label: text.value.kindSingle }, { value: 'sealed' as const, label: text.value.kindSealed }])
+const sealed = ref<SealedHit | null>(null)
+const localName = useLocalName()
 
 const picked = ref<{ game: Game, slug: string } | null>(props.initial ? { game: props.initial.game, slug: props.initial.slug } : null)
 const card = ref<CreatorCard | null>(null)
@@ -82,12 +93,20 @@ const busy = ref(false)
 const error = ref<string | null>(null)
 const created = ref(0)
 const last = ref<{ id: string, priceCents: number } | null>(null)
+const pickSealed = (hit: SealedHit) => {
+  sealed.value = hit
+  created.value = 0
+  last.value = null
+}
 const submit = async () => {
-  if (!printing.value) return
+  if (kind.value === 'single' ? !printing.value : !sealed.value) return
   busy.value = true
   error.value = null
   try {
-    const res = await props.create({ ...values.value, printingId: printing.value.id, comment: values.value.comment || null, storageLocation: values.value.storageLocation || null })
+    const extra = { comment: values.value.comment || null, storageLocation: values.value.storageLocation || null }
+    const res = await props.create(kind.value === 'sealed'
+      ? { productId: sealed.value!.productId, quantity: values.value.quantity, priceCents: values.value.priceCents, ...extra }
+      : { ...values.value, printingId: printing.value!.id, ...extra })
     last.value = { id: res.id, priceCents: values.value.priceCents ?? 0 }
     created.value++
     emit('created', last.value)
@@ -106,7 +125,38 @@ const submit = async () => {
 
 <template>
   <div>
-    <Panel v-if="!picked" :title="text.step1">
+    <div v-if="searchSealed && !picked && !sealed" class="mb-4 flex flex-wrap items-center gap-3">
+      <span class="text-label text-fg-subtle">{{ text.kind }}</span>
+      <UiSegmented v-model="kind" :options="kindOptions" :label="text.kind" />
+    </div>
+
+    <template v-if="kind === 'sealed'">
+      <Panel v-if="!sealed" :title="text.sealedStep1">
+        <ListingSealedPicker :search="searchSealed!" @pick="pickSealed" />
+      </Panel>
+      <Panel v-else :title="`${text.sealedStep2}: ${localName(sealed.name, sealed.nameDe)}`">
+        <template #actions>
+          <button type="button" class="min-h-8 text-small text-accent hover:underline" @click="sealed = null">{{ text.otherProduct }}</button>
+        </template>
+        <div class="grid gap-6 md:grid-cols-[160px_1fr]">
+          <div class="mx-auto w-40">
+            <CardImage :src="sealed.imageId ? `/media/${sealed.imageId}` : null" :alt="sealed.name" />
+            <p class="mt-2 text-center text-meta text-fg-subtle">{{ gameLabel(sealed.game) }} · {{ sealedTypeLabel(sealed.type, locale) }}</p>
+          </div>
+          <ListingForm v-model="values" mode="create" sealed :photo-hint-from-cents="photoHintFromCents" :busy="busy" @submit="submit">
+            <template #guide>
+              <ListingPriceGuide :reference-cents="null" :market-from-cents="sealed.fromCents" @use="cents => values.priceCents = cents" />
+            </template>
+            <template #actions><slot name="actions" /></template>
+          </ListingForm>
+        </div>
+        <UiNotice v-if="created" tone="success" class="mt-4">{{ text.created(created) }}</UiNotice>
+        <slot v-if="last" name="after" :listing="last" />
+        <UiNotice v-if="error" tone="danger" class="mt-4">{{ error }}</UiNotice>
+      </Panel>
+    </template>
+
+    <Panel v-else-if="!picked" :title="text.step1">
       <ListingCardPicker :search="search" @pick="pickCard" />
     </Panel>
 

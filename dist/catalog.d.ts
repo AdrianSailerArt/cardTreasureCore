@@ -24,3 +24,4 @@ export declare const gameLabel: (game: string) => string;
 export declare const conditionLabel: (condition: string) => string;
 export declare const languageLabel: (language: string, locale?: UiLocale) => string;
 export declare const finishLabel: (finish: string, locale?: UiLocale) => string;
+export declare const sealedTypeLabel: (type: string, locale?: UiLocale) => string;

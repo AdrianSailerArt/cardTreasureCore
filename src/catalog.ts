@@ -46,3 +46,9 @@ export const gameLabel = (game: string) => GAME_LABELS[game] ?? game
 export const conditionLabel = (condition: string) => CONDITION_LABELS[condition] ?? condition
 export const languageLabel = (language: string, locale: UiLocale = 'de') => LANGUAGE_LABELS[locale][language] ?? language.toUpperCase()
 export const finishLabel = (finish: string, locale: UiLocale = 'de') => FINISH_LABELS[locale][finish] ?? finish
+
+const SEALED_TYPE_LABELS: Record<UiLocale, Record<string, string>> = {
+  de: { booster: 'Booster', booster_display: 'Display', collector_booster: 'Collector Booster', bundle: 'Bundle', elite_trainer_box: 'Elite Trainer Box', starter_deck: 'Starter Deck', structure_deck: 'Structure Deck', commander_deck: 'Commander Deck', tin: 'Tin', collection_box: 'Kollektion', other: 'Sonstiges' },
+  en: { booster: 'Booster', booster_display: 'Display', collector_booster: 'Collector booster', bundle: 'Bundle', elite_trainer_box: 'Elite Trainer Box', starter_deck: 'Starter deck', structure_deck: 'Structure deck', commander_deck: 'Commander deck', tin: 'Tin', collection_box: 'Collection box', other: 'Other' },
+}
+export const sealedTypeLabel = (type: string, locale: UiLocale = 'de') => SEALED_TYPE_LABELS[locale][type] ?? type

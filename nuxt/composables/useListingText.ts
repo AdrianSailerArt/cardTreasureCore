@@ -2,6 +2,8 @@
 const TEXT = {
   de: {
     step1: '1. Karte suchen', step2: '2. Druck wählen', step3: '3. Angebot', otherCard: 'Andere Karte', done: 'Fertig',
+    kind: 'Was möchtest du verkaufen?', kindSingle: 'Einzelkarte', kindSealed: 'Sealed-Produkt',
+    sealedStep1: '1. Sealed-Produkt suchen', sealedStep2: '2. Angebot', otherProduct: 'Anderes Produkt', searchSealed: 'Sealed-Produkt suchen (Name oder Set) …',
     created: (n: number) => (n === 1 ? 'Angebot eingestellt.' : `${n} Angebote eingestellt.`),
     search: 'Karte suchen …', allGames: 'Alle Spiele', noResults: 'Nichts gefunden.', searching: 'Wird gesucht …', loading: 'Wird geladen …',
     printingCount: (n: number) => (n === 1 ? '1 Druck' : `${n} Drucke`), from: 'ab', noOffersYet: 'noch keine Angebote',
@@ -16,6 +18,8 @@ const TEXT = {
   },
   en: {
     step1: '1. Find card', step2: '2. Choose printing', step3: '3. Offer', otherCard: 'Other card', done: 'Done',
+    kind: 'What do you want to sell?', kindSingle: 'Single card', kindSealed: 'Sealed product',
+    sealedStep1: '1. Find sealed product', sealedStep2: '2. Offer', otherProduct: 'Other product', searchSealed: 'Search sealed products (name or set) …',
     created: (n: number) => (n === 1 ? 'Offer published.' : `${n} offers published.`),
     search: 'Search for a card …', allGames: 'All games', noResults: 'Nothing found.', searching: 'Searching …', loading: 'Loading …',
     printingCount: (n: number) => (n === 1 ? '1 printing' : `${n} printings`), from: 'from', noOffersYet: 'no offers yet',

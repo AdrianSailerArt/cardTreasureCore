@@ -2,7 +2,7 @@
  * Nuxt-Layer mit gemeinsamen UI-Bausteinen für Shop und CMS. Einbinden in nuxt.config:  extends: ['@cardtreasure/core/nuxt']
  *   components/atoms  → UiButton, UiChip, UiCombobox, UiField, UiInput, UiNotice, UiSegmented, UiSelect, UiTable (Präfix Ui)
  *   components/base   → Tag, Panel, PageHeader, Stat, StatusTag, EmptyState, CountryFlag, ChartFrame, Breadcrumbs, KeyValueList
- *   components/listing → ListingCreator (ganzer Ablauf Karte → Druck → Angebot), ListingCardPicker, ListingPrintingPicker,
+ *   components/listing → ListingCreator (ganzer Ablauf Karte → Druck → Angebot, oder Sealed → Angebot), ListingCardPicker, ListingSealedPicker, ListingPrintingPicker,
  *                       ListingForm, ListingConditionPicker, ListingPriceInput, ListingPriceGuide (gleich in Shop und CMS)
  *   composables       → useUiLocale, useUiFormat (Formatierung und Status-Wortschatz in der aktuellen Sprache)
  *   assets/ui.css     → Color-Set, Formen, Fokus, label-caps; in der main.css der App importieren
@@ -15,7 +15,7 @@ const shipping = { from: '@cardtreasure/core/shipping', imports: ['SHIPPING_FORM
 const slug = { from: '@cardtreasure/core/slug', imports: ['slugify'] }
 const ui = { from: '@cardtreasure/core/format', imports: ['formatPrice', 'formatNumber', 'formatDate', 'formatRate', 'countryName', 'intlLocale'] }
 const status = { from: '@cardtreasure/core/status', imports: ['statusTone', 'statusLabel', 'STATUS_LABELS'] }
-const catalog = { from: '@cardtreasure/core/catalog', imports: ['GAMES', 'isGame', 'CARD_LANGUAGES', 'CONDITION_ORDER', 'CONDITION_SHORT', 'parseEuro', 'headlinePrice', 'gameLabel', 'conditionLabel', 'languageLabel', 'finishLabel'] }
+const catalog = { from: '@cardtreasure/core/catalog', imports: ['GAMES', 'isGame', 'CARD_LANGUAGES', 'CONDITION_ORDER', 'CONDITION_SHORT', 'parseEuro', 'headlinePrice', 'gameLabel', 'conditionLabel', 'languageLabel', 'finishLabel', 'sealedTypeLabel'] }
 
 export default defineNuxtConfig({
   imports: { presets: [shipping, slug, ui, status, catalog] },
