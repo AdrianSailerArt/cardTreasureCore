@@ -145,7 +145,7 @@ const submit = async () => {
           </div>
           <ListingForm v-model="values" mode="create" sealed :photo-hint-from-cents="photoHintFromCents" :busy="busy" @submit="submit">
             <template #guide>
-              <ListingPriceGuide :reference-cents="null" :market-from-cents="sealed.fromCents" @use="cents => values.priceCents = cents" />
+              <ListingPriceGuide :reference-cents="null" :market-from-cents="sealed.fromCents" sealed @use="cents => values.priceCents = cents" />
             </template>
             <template #actions><slot name="actions" /></template>
           </ListingForm>

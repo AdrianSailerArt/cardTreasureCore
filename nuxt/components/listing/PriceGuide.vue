@@ -5,6 +5,8 @@ const props = defineProps<{
   referenceCurrency?: string | null
   trendCents?: number | null
   marketFromCents: number | null
+  /** Sealed-Produkt statt Kartendruck (nur für den Hinweis ohne Preisdaten) */
+  sealed?: boolean
 }>()
 defineEmits<{ use: [cents: number] }>()
 const text = useListingText()
@@ -30,5 +32,5 @@ const entries = computed(() => [
       {{ e.label }}: <span class="tabular-nums text-fg">{{ price(e.cents, e.currency) }}</span>
     </button>
   </div>
-  <p v-else class="text-meta text-fg-subtle">{{ text.guideNone }}</p>
+  <p v-else class="text-meta text-fg-subtle">{{ sealed ? text.guideNoneSealed : text.guideNone }}</p>
 </template>

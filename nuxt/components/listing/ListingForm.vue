@@ -76,7 +76,7 @@ const valid = computed(() => values.value.priceCents !== null && values.value.pr
     <p v-if="mode === 'create' && photoHintFromCents !== null && (values.priceCents ?? 0) >= photoHintFromCents" class="text-meta text-warning">{{ text.photoHint }}</p>
 
     <UiField :label="text.comment" :hint="text.commentHint">
-      <UiInput v-model="values.comment" :placeholder="text.commentPlaceholder" />
+      <UiInput v-model="values.comment" :placeholder="sealed ? text.commentPlaceholderSealed : text.commentPlaceholder" />
     </UiField>
     <UiField :label="text.storage" :hint="text.storageHint">
       <UiInput v-model="values.storageLocation" :placeholder="text.storagePlaceholder" />
