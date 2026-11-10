@@ -1,15 +1,15 @@
-export interface MailMessage {
+export type MailMessage = {
     to: string;
     subject: string;
     html: string;
     text: string;
     /** Art der Mail (z.B. order_confirmed, magic_link) für Auswertungen beim Versanddienst */
     tag?: string;
-}
-export interface Mailer {
+};
+export type Mailer = {
     send: (message: MailMessage) => Promise<void>;
-}
-export interface MailerConfig {
+};
+export type MailerConfig = {
     from: string;
     smtpUrl?: string;
     brevoApiKey?: string;
@@ -17,7 +17,7 @@ export interface MailerConfig {
     brevoSandbox?: boolean;
     /** Für Tests austauschbar */
     fetch?: typeof fetch;
-}
+};
 export declare const BREVO_API = "https://api.brevo.com/v3/smtp/email";
 /** „Name <adresse@domain>“ oder nur die Adresse in Name und Adresse zerlegen. */
 export declare const parseAddress: (value: string) => {

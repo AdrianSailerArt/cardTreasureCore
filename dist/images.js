@@ -4,8 +4,8 @@
  * Ablauf beim Hochladen: Bild verarbeiten → Dateien speichern → Datenbank; schlägt die Datenbank fehl, werden die Dateien wieder gelöscht.
  */
 import { sql } from 'drizzle-orm';
+import { rowsOf } from './db.js';
 import { MediaError, mediaKey, processImage } from './media.js';
-const rowsOf = async (db, query) => await db.execute(query);
 // Im Shop aus shared/utils/photos.ts; das CMS braucht die Werte nicht
 const MAX_LISTING_PHOTOS = 1;
 export { MAX_LISTING_PHOTOS };

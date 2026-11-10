@@ -8,7 +8,7 @@
 import sharp, { type Metadata } from 'sharp'
 import { AwsClient } from 'aws4fetch'
 
-export interface MediaStoreConfig {
+export type MediaStoreConfig = {
   endpoint: string
   bucket: string
   accessKey: string
@@ -16,7 +16,7 @@ export interface MediaStoreConfig {
   region?: string
 }
 
-export interface MediaStore {
+export type MediaStore = {
   put: (key: string, body: Uint8Array, contentType: string) => Promise<void>
   get: (key: string) => Promise<{ body: Uint8Array, contentType: string } | null>
   remove: (key: string) => Promise<void>
@@ -78,7 +78,7 @@ const MAX_SIDE = 1600
 const THUMB_SIDE = 400
 const MIN_SIDE = 200
 
-export interface ProcessedImage {
+export type ProcessedImage = {
   full: Uint8Array
   thumb: Uint8Array
   width: number

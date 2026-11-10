@@ -6,14 +6,14 @@ import type { PickablePrinting } from './PrintingPicker.vue'
 import type { SealedHit } from './SealedPicker.vue'
 
 /** Karte mit Drucken, wie sie die App für Schritt 2 und 3 lädt (Shop: /api/catalog/<game>/cards/<slug>). */
-export interface CreatorCard {
+export type CreatorCard = {
   card: { name: string, translations: { language: string, name: string }[] }
   printings: (PickablePrinting & { languages: string[], hasFirstEdition: boolean, trendCents: number | null, prices: Price[] })[]
 }
 /** Was beim Anlegen an die App geht */
 export type CreatorInput = Omit<ListingValues, 'comment' | 'storageLocation'> & { printingId: string, comment: string | null, storageLocation: string | null }
 /** Sealed: Zustand, Sprache und Variante stehen am Produkt */
-export interface CreatorSealedInput { productId: string, quantity: number, priceCents: number | null, comment: string | null, storageLocation: string | null }
+export type CreatorSealedInput = { productId: string, quantity: number, priceCents: number | null, comment: string | null, storageLocation: string | null }
 
 /**
  * Angebot anlegen, gleich in Shop (Kunden) und CMS (Angebote von CardTreasure):

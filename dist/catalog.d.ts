@@ -10,14 +10,14 @@ export declare const CONDITION_SHORT: Record<string, string>;
 /** Euro-Eingabe ("1,23", "1.23", "1") in Cent; null bei ungültiger Eingabe. */
 export declare const parseEuro: (input: string) => number | null;
 /** Richtpreis einer Quelle (Cardmarket, TCGplayer) für eine Variante */
-export interface Price {
+export type Price = {
     source: string;
     finish: string;
     currency: string;
     low: number | null;
     avg: number | null;
     trend: number | null;
-}
+};
 /** Der aussagekräftigste Wert einer Preisangabe: Trend, sonst Durchschnitt, sonst Tiefstwert. */
 export declare const headlinePrice: (p: Price | null | undefined) => number | null;
 export declare const gameLabel: (game: string) => string;

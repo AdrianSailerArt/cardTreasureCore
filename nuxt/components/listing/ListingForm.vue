@@ -3,7 +3,7 @@
  * Formular für ein Angebot (Shop und CMS). Beim Anlegen mit Variante und 1. Edition, beim Bearbeiten ohne
  * (die hängen am Druck und lassen sich nachträglich nicht ändern). Für Sealed nur Menge, Preis, Kommentar, Lagerplatz.
  */
-export interface ListingValues {
+export type ListingValues = {
   condition: string
   language: string
   finish: string

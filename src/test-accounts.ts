@@ -7,7 +7,7 @@
 export const TEST_PASSWORD = 'test1234'
 export const TEST_EMAIL_DOMAIN = 'test.cardtreasure.test'
 
-export interface TestAccount {
+export type TestAccount = {
   id: string
   email: string
   name: string

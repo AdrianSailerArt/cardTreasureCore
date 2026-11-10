@@ -2,7 +2,7 @@
 import type { Game } from '@cardtreasure/core/catalog'
 
 /** Treffer der Sealed-Suche (Booster, Display, Deck …) */
-export interface SealedHit {
+export type SealedHit = {
   productId: string, game: Game, slug: string, type: string, name: string, nameDe: string | null
   setName: string | null, setNameDe: string | null, imageId: string | null, fromCents: number | null
 }

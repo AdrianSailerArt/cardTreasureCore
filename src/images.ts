@@ -4,15 +4,14 @@
  * Ablauf beim Hochladen: Bild verarbeiten → Dateien speichern → Datenbank; schlägt die Datenbank fehl, werden die Dateien wieder gelöscht.
  */
 import { sql, type SQL } from 'drizzle-orm'
+import { rowsOf } from './db.js'
 import { MediaError, mediaKey, processImage, type MediaStore } from './media.js'
 
 /** Nur was beide Apps gemeinsam haben: eine Drizzle-Datenbank mit execute und transaction */
-export interface SqlDb {
+export type SqlDb = {
   execute: (query: SQL) => Promise<unknown>
   transaction: <T>(fn: (tx: SqlDb) => Promise<T>) => Promise<T>
 }
-
-const rowsOf = async <T>(db: SqlDb, query: SQL) => await db.execute(query) as unknown as T[]
 
 // Im Shop aus shared/utils/photos.ts; das CMS braucht die Werte nicht
 const MAX_LISTING_PHOTOS = 1

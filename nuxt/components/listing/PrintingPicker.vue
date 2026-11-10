@@ -1,6 +1,6 @@
 <script setup lang="ts">
 /** Schritt 2 beim Anlegen: den konkreten Druck (Set, Nummer, Seltenheit) wählen. */
-export interface PickablePrinting {
+export type PickablePrinting = {
   id: string
   collectorNumber: string | null
   rarity: string | null

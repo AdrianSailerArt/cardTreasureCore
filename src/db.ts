@@ -6,6 +6,8 @@
  *   ssl             Pflicht für jede Datenbank außer der lokalen (Docker)
  *   kurze Leerlaufzeit, damit serverlose Funktionen (Vercel) Verbindungen schnell zurückgeben
  */
+import type { SQL } from 'drizzle-orm'
+
 const LOCAL_HOSTS = new Set(['localhost', '127.0.0.1', '::1', '[::1]', 'db', 'host.docker.internal'])
 
 export const isLocalDatabase = (url: string) => {
@@ -26,3 +28,9 @@ export const pgOptions = (url: string, max = 5) => ({
   connect_timeout: 15,
   onnotice: () => {},
 })
+
+/** Alles, was rohes SQL ausführen kann: eine Drizzle-Datenbank oder eine Transaktion, egal mit welchem Schema. */
+export type SqlRunner = { execute: (query: SQL) => PromiseLike<unknown> }
+
+/** Rohes SQL ausführen und die Zeilen typisiert zurückgeben (Spaltennamen im SQL als "camelCase" benennen). */
+export const rowsOf = async <T>(db: SqlRunner, query: SQL): Promise<T[]> => await db.execute(query) as unknown as T[]

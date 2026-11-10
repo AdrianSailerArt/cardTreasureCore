@@ -25,7 +25,7 @@ export const parseEuro = (input: string): number | null => {
 }
 
 /** Richtpreis einer Quelle (Cardmarket, TCGplayer) für eine Variante */
-export interface Price { source: string, finish: string, currency: string, low: number | null, avg: number | null, trend: number | null }
+export type Price = { source: string, finish: string, currency: string, low: number | null, avg: number | null, trend: number | null }
 /** Der aussagekräftigste Wert einer Preisangabe: Trend, sonst Durchschnitt, sonst Tiefstwert. */
 export const headlinePrice = (p: Price | null | undefined): number | null => (p ? (p.trend ?? p.avg ?? p.low) : null)
 

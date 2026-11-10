@@ -7,7 +7,7 @@
  */
 import nodemailer from 'nodemailer'
 
-export interface MailMessage {
+export type MailMessage = {
   to: string
   subject: string
   html: string
@@ -16,11 +16,11 @@ export interface MailMessage {
   tag?: string
 }
 
-export interface Mailer {
+export type Mailer = {
   send: (message: MailMessage) => Promise<void>
 }
 
-export interface MailerConfig {
+export type MailerConfig = {
   from: string
   smtpUrl?: string
   brevoApiKey?: string

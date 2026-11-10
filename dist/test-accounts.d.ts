@@ -1,6 +1,6 @@
 export declare const TEST_PASSWORD = "test1234";
 export declare const TEST_EMAIL_DOMAIN = "test.cardtreasure.test";
-export interface TestAccount {
+export type TestAccount = {
     id: string;
     email: string;
     name: string;
@@ -20,6 +20,6 @@ export interface TestAccount {
         vatId: string;
         displayName: string;
     };
-}
+};
 export declare const TEST_ACCOUNTS: TestAccount[];
 export declare const isTestEmail: (email: string) => boolean;

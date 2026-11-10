@@ -1,4 +1,4 @@
-export interface ChartTheme {
+export type ChartTheme = {
   fg: string
   muted: string
   subtle: string

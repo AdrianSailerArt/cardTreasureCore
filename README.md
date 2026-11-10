@@ -12,12 +12,17 @@ Was beide Apps brauchen, liegt einmal hier statt als Kopie in zwei Repos.
 | `@cardtreasure/core/images` | Angebotsfotos und ersetzte Kartenbilder (nur SQL, Datenbank wird übergeben) |
 | `@cardtreasure/core/slug` | `slugify` |
 | `@cardtreasure/core/format` | `formatPrice`, `formatNumber`, `formatDate`, `formatRate`, `countryName` (Sprache als Parameter) |
-| `@cardtreasure/core/db` | `pgOptions(url)`: Postgres-Verbindung für lokal und Supabase/Neon (Pooler, SSL) |
+| `@cardtreasure/core/db` | `pgOptions(url)`: Postgres-Verbindung für lokal und Supabase/Neon (Pooler, SSL); `rowsOf(db, sql)` und `SqlRunner` für rohes SQL in Fachmodulen |
+| `@cardtreasure/core/dev-server` | `startDevServer({ label, defaultPort, lanUrls })`: `nuxt dev` im lokalen Netzwerk (für `scripts/dev.ts` beider Apps) |
 | `@cardtreasure/core/mailer` | Mailversand: Brevo (EU, API, optional Sandbox), sonst SMTP (lokal Mailpit), sonst Konsole; `createMemoryMailer` für Tests |
 | `@cardtreasure/core/status` | Status-Wortschatz: `statusTone` (Ampel), `statusLabel` (de/en) |
 | `@cardtreasure/core/lan`, `…/dev-origins` | LAN-Adresse finden, vertrauenswürdige Herkünfte für die Entwicklung |
 | `@cardtreasure/core/nuxt` | Nuxt-Layer: Atoms (`UiButton`, `UiChip`, `UiCombobox`, `UiField`, `UiInput`, `UiNotice`, `UiSegmented`, `UiSelect`, `UiTable`), Components (`Tag`, `Panel`, `PageHeader`, `Stat`, `StatusTag`, `EmptyState`, `CountryFlag`, `ChartFrame`, `Breadcrumbs`, `KeyValueList`), `useUiLocale`, `useUiFormat`, `useDebounced`, `useChartTheme`, `chartBase` |
 | `@cardtreasure/core/nuxt/assets/ui.css` | Color-Set, Schrift Geist (lokal, OFL), Formensprache (knapper Radius), sichtbarer Fokus, Schrift nach Rolle: `text-hero`, `text-headline`, `text-section`, `text-title`, `text-heading`, `text-logo`, `text-figure`, `text-price`, `text-value`, `text-lead`, `text-body`, `text-small`, `text-meta`, `text-micro`, `text-tag`, `text-eyebrow`, `text-label`, `text-button(-sm/-lg)` |
+
+Der Layer bringt außerdem Server-Utils mit, die in beiden Apps ohne Import da sind (`nuxt/server/utils`): `rows` (SQL auf `useDb()` der App),
+`localeParam`, `gameParam`, `flagParam` (Query-Parameter), `useMediaStore`, `readUpload`, `runMediaAction` (Bilder) und die Werte der Fachmodule
+(`GAMES`, `quoteShipping`, `formatPrice` …). Dazu das Plugin `echarts.client`.
 
 Die Module haben keine Nuxt-Abhängigkeit (außer dem Layer). Sie werden als fertiges JavaScript mit Typen aus `dist/` ausgeliefert
 (Nitro übersetzt kein TypeScript aus `node_modules`); `dist/` liegt deshalb mit im Repo. Der Nuxt-Layer bleibt Quelltext, den übersetzt Nuxt.

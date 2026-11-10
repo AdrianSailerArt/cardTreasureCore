@@ -37,13 +37,13 @@ export const PACKING = {
   sealedWeightG: 400,
 }
 
-export interface PackageItem {
+export type PackageItem = {
   kind: 'single' | 'sealed'
   quantity: number
   unitPriceCents: number
 }
 
-export interface PackageEstimate {
+export type PackageEstimate = {
   weightG: number
   thicknessMm: number
   cards: number
@@ -91,7 +91,7 @@ export const estimatePackage = (items: PackageItem[]): PackageEstimate => {
   }
 }
 
-export interface ShippingOption {
+export type ShippingOption = {
   id: string
   name: string
   format: ShippingFormat
@@ -155,7 +155,7 @@ export const shippingTariff = (originCountry: string): ShippingOption[] => {
   ]
 }
 
-export interface ShippingQuote {
+export type ShippingQuote = {
   service: string
   format: ShippingFormat
   tracked: boolean

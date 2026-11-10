@@ -6,7 +6,7 @@
  * Klick auf einen Treffer mit preventDefault: steckt die Combobox in einem <label> (UiField), würde der Browser den Klick
  * sonst an das erste Bedienelement im Label weitergeben, z.B. einen Knopf, der nach der Auswahl erscheint.
  */
-export interface ComboboxItem { value: string, label: string, hint?: string | null }
+export type ComboboxItem = { value: string, label: string, hint?: string | null }
 
 const props = withDefaults(defineProps<{
   items: ComboboxItem[]

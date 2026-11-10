@@ -2,7 +2,7 @@
 import type { Game } from '@cardtreasure/core/catalog'
 
 /** Treffer der Kartensuche */
-export interface CardHit { game: Game, slug: string, name: string, nameDe: string | null, imagePrintingId: string | null, setName: string | null, printingCount: number }
+export type CardHit = { game: Game, slug: string, name: string, nameDe: string | null, imagePrintingId: string | null, setName: string | null, printingCount: number }
 
 /** Schritt 1 beim Anlegen: Karte suchen (deutsch oder englisch), optional nach Spiel gefiltert. Die Suche übergibt die App. */
 const props = defineProps<{ search: (q: string, game?: Game) => Promise<CardHit[]> }>()

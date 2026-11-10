@@ -1,10 +1,10 @@
 import { type SQL } from 'drizzle-orm';
 import { type MediaStore } from './media.js';
 /** Nur was beide Apps gemeinsam haben: eine Drizzle-Datenbank mit execute und transaction */
-export interface SqlDb {
+export type SqlDb = {
     execute: (query: SQL) => Promise<unknown>;
     transaction: <T>(fn: (tx: SqlDb) => Promise<T>) => Promise<T>;
-}
+};
 declare const MAX_LISTING_PHOTOS = 1;
 export { MAX_LISTING_PHOTOS };
 /** Foto an ein eigenes Angebot hängen (eins pro Angebot). */

@@ -37,22 +37,22 @@ export declare const PACKING: {
     /** Sealed-Produkte (Booster, Displays …) gehen grundsätzlich als Paket */
     sealedWeightG: number;
 };
-export interface PackageItem {
+export type PackageItem = {
     kind: 'single' | 'sealed';
     quantity: number;
     unitPriceCents: number;
-}
-export interface PackageEstimate {
+};
+export type PackageEstimate = {
     weightG: number;
     thicknessMm: number;
     cards: number;
     toploaders: number;
     sealed: number;
     valueCents: number;
-}
+};
 /** Schätzt Gewicht und Dicke einer Sendung inklusive Schutz, Verpackung und Puffer. */
 export declare const estimatePackage: (items: PackageItem[]) => PackageEstimate;
-export interface ShippingOption {
+export type ShippingOption = {
     id: string;
     name: string;
     format: ShippingFormat;
@@ -63,7 +63,7 @@ export interface ShippingOption {
     maxOrderValueCents: number | null;
     destinationCountries: string[];
     active: boolean;
-}
+};
 export type ShippingRejection = 'country' | 'weight' | 'thickness' | 'value' | 'sealed' | 'inactive';
 /** Warum eine Versandart für diese Sendung nicht passt, oder null, wenn sie passt. */
 export declare const rejectReason: (option: ShippingOption, pkg: PackageEstimate, country: string) => ShippingRejection | null;
@@ -77,14 +77,14 @@ export declare const EU_SHIPPING_COUNTRIES: readonly ["AT", "BE", "BG", "CY", "C
  * Für Verkäufer außerhalb Deutschlands gilt vorerst derselbe Tarif als Näherung.
  */
 export declare const shippingTariff: (originCountry: string) => ShippingOption[];
-export interface ShippingQuote {
+export type ShippingQuote = {
     service: string;
     format: ShippingFormat;
     tracked: boolean;
     priceCents: number;
     weightG: number;
     thicknessMm: number;
-}
+};
 /**
  * Versand für eine Sendung automatisch berechnen: Gewicht und Dicke schätzen und die günstigste
  * passende Versandart aus dem Tarif wählen. Null, wenn nichts passt (z.B. Ziel außerhalb der EU).
