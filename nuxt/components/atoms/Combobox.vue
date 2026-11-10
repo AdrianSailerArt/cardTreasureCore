@@ -3,6 +3,8 @@
  * Suchfeld mit Vorschlagsliste (Kunde, Set, Karte wählen …), barrierefrei nach dem ARIA-Combobox-Muster:
  * Pfeiltasten wählen, Enter übernimmt, Esc schließt; Screenreader hören Anzahl und aktive Option.
  * Die Suche selbst macht die aufrufende Komponente (v-model:query, Treffer als `items`).
+ * Klick auf einen Treffer mit preventDefault: steckt die Combobox in einem <label> (UiField), würde der Browser den Klick
+ * sonst an das erste Bedienelement im Label weitergeben, z.B. einen Knopf, der nach der Auswahl erscheint.
  */
 export interface ComboboxItem { value: string, label: string, hint?: string | null }
 
@@ -75,7 +77,7 @@ const onKey = (e: KeyboardEvent) => {
         :class="i === active ? 'bg-surface-muted text-accent' : ''"
         @mousedown.prevent
         @mouseenter="active = i"
-        @click="choose(item)"
+        @click.prevent="choose(item)"
       >
         {{ item.label }}
         <span v-if="item.hint" class="block text-meta text-fg-subtle">{{ item.hint }}</span>
