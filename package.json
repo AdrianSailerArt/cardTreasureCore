@@ -1,6 +1,6 @@
 {
   "name": "@cardtreasure/core",
-  "version": "0.7.1",
+  "version": "0.8.0",
   "private": true,
   "type": "module",
   "description": "Gemeinsamer Code für CardTreasure Shop und CMS: Fachmodule (Versand, Bilder) und ein Nuxt-Layer mit gemeinsamen UI-Bausteinen.",
@@ -47,6 +47,10 @@
     "./db": {
       "types": "./dist/db.d.ts",
       "default": "./dist/db.js"
+    },
+    "./test-accounts": {
+      "types": "./dist/test-accounts.d.ts",
+      "default": "./dist/test-accounts.js"
     }
   },
   "files": [
