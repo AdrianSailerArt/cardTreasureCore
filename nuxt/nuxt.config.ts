@@ -13,7 +13,7 @@
  * Fachmodule (Versand, Bilder …) werden direkt importiert:  import { quoteShipping } from '@cardtreasure/core/shipping'
  */
 // Diese Werte stehen in Vue und auf dem Server ohne Import zur Verfügung (wie vorher aus shared/utils)
-const shipping = { from: '@cardtreasure/core/shipping', imports: ['SHIPPING_FORMATS', 'FORMAT_LIMITS', 'PACKING', 'estimatePackage', 'rejectReason', 'chooseShipping', 'EU_SHIPPING_COUNTRIES', 'shippingTariff', 'quoteShipping'] }
+const shipping = { from: '@cardtreasure/core/shipping', imports: ['SHIPPING_FORMATS', 'FORMAT_LIMITS', 'PACKING', 'PACKAGING_COST', 'packagingCost', 'estimatePackage', 'rejectReason', 'chooseShipping', 'EU_SHIPPING_COUNTRIES', 'shippingTariff', 'quoteShipping'] }
 const slug = { from: '@cardtreasure/core/slug', imports: ['slugify'] }
 const ui = { from: '@cardtreasure/core/format', imports: ['formatPrice', 'formatNumber', 'formatDate', 'formatRate', 'countryName', 'intlLocale'] }
 const status = { from: '@cardtreasure/core/status', imports: ['statusTone', 'statusLabel', 'STATUS_LABELS'] }

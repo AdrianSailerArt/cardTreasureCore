@@ -3,7 +3,7 @@
  * Als Re-Export statt als Nitro-Preset: so kennt TypeScript die Typen. Das Preset erzeugte einen Pfad, den der
  * Typecheck nicht auflösen konnte, und alles war `any`.
  */
-export { SHIPPING_FORMATS, FORMAT_LIMITS, PACKING, estimatePackage, rejectReason, chooseShipping, EU_SHIPPING_COUNTRIES, shippingTariff, quoteShipping } from '@cardtreasure/core/shipping'
+export { SHIPPING_FORMATS, FORMAT_LIMITS, PACKING, PACKAGING_COST, packagingCost, estimatePackage, rejectReason, chooseShipping, EU_SHIPPING_COUNTRIES, shippingTariff, quoteShipping } from '@cardtreasure/core/shipping'
 export { slugify } from '@cardtreasure/core/slug'
 export { formatPrice, formatNumber, formatDate, formatRate, countryName, intlLocale } from '@cardtreasure/core/format'
 export { statusTone, statusLabel, STATUS_LABELS } from '@cardtreasure/core/status'

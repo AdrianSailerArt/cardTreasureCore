@@ -11,7 +11,7 @@ export type CreatorCard = {
   printings: (PickablePrinting & { languages: string[], hasFirstEdition: boolean, trendCents: number | null, prices: Price[] })[]
 }
 /** Was beim Anlegen an die App geht */
-export type CreatorInput = Omit<ListingValues, 'comment' | 'storageLocation'> & { printingId: string, comment: string | null, storageLocation: string | null }
+export type CreatorInput = Omit<ListingValues, 'comment' | 'storageLocation' | 'inToploader'> & { printingId: string, comment: string | null, storageLocation: string | null, inToploader: boolean }
 /** Sealed: Zustand, Sprache und Variante stehen am Produkt */
 export type CreatorSealedInput = { productId: string, quantity: number, priceCents: number | null, comment: string | null, storageLocation: string | null }
 
@@ -76,7 +76,7 @@ const pickCard = (game: Game, slug: string) => {
 }
 
 const values = ref<ListingValues>({
-  condition: 'near_mint', language: locale.value, finish: 'normal', isFirstEdition: false, quantity: 1, priceCents: null, comment: '', storageLocation: '',
+  condition: 'near_mint', language: locale.value, finish: 'normal', isFirstEdition: false, quantity: 1, priceCents: null, comment: '', storageLocation: '', inToploader: false,
 })
 watch(printing, (p) => {
   if (!p) return
@@ -106,7 +106,7 @@ const submit = async () => {
     const extra = { comment: values.value.comment || null, storageLocation: values.value.storageLocation || null }
     const res = await props.create(kind.value === 'sealed'
       ? { productId: sealed.value!.productId, quantity: values.value.quantity, priceCents: values.value.priceCents, ...extra }
-      : { ...values.value, printingId: printing.value!.id, ...extra })
+      : { ...values.value, inToploader: !!values.value.inToploader, printingId: printing.value!.id, ...extra })
     last.value = { id: res.id, priceCents: values.value.priceCents ?? 0 }
     created.value++
     emit('created', last.value)

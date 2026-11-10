@@ -13,6 +13,8 @@ export type ListingValues = {
   comment: string
   /** Lagerplatz, nur für den Anbieter sichtbar */
   storageLocation?: string
+  /** Die Karte wird im Toploader verschickt: schwerer und dicker, zählt für den Versand */
+  inToploader?: boolean
 }
 
 const props = withDefaults(defineProps<{
@@ -63,6 +65,14 @@ const valid = computed(() => values.value.priceCents !== null && values.value.pr
       <input v-model="values.isFirstEdition" type="checkbox" class="accent-accent">
       {{ finishLabel('firstEdition', locale) }}
     </label>
+
+    <div v-if="!sealed">
+      <label class="flex min-h-6 items-center gap-2 text-small">
+        <input v-model="values.inToploader" type="checkbox" class="size-4 accent-accent" aria-describedby="listing-toploader-hint">
+        {{ text.toploader }}
+      </label>
+      <p id="listing-toploader-hint" class="mt-1 text-meta text-fg-subtle">{{ text.toploaderHint }}</p>
+    </div>
 
     <div class="grid gap-4 sm:grid-cols-2">
       <UiField :label="text.quantity">

@@ -2,9 +2,13 @@
  * Versandberechnung: Gewicht und Dicke einer Sendung schätzen und die günstigste passende Versandart wählen.
  * Wird von Server (Checkout) und Oberfläche (Versand-Rechner) gleichermaßen genutzt.
  *
- * Karten werden fast nie nackt verschickt: Jede Karte steckt in einer Hülle, wertvolle zusätzlich im Toploader,
- * dazu Umschlag und ggf. Pappe. Deshalb wird alles mit Schutz gerechnet und am Ende ein Puffer aufgeschlagen,
- * damit die Sendung lieber ein Format größer als zu knapp frankiert ist.
+ * Karten werden fast nie nackt verschickt: Jede Karte steckt in einer Hülle, dazu Umschlag und Pappe. Deshalb wird
+ * alles mit Schutz gerechnet und am Ende ein Puffer aufgeschlagen, damit die Sendung lieber ein Format größer als
+ * zu knapp frankiert ist. Ob eine Karte zusätzlich im Toploader verschickt wird, legt der Verkäufer am Angebot fest
+ * (`toploader`): dann ist sie schwerer und dicker.
+ *
+ * Auf das Porto kommt immer die Verpackungspauschale (PACKAGING_COST): Umschlag bzw. Karton und je Toploader ein Betrag.
+ * Der Versandpreis einer Sendung ist Porto + Verpackung.
  */
 
 export const SHIPPING_FORMATS = ['standard', 'compact', 'large', 'maxi', 'parcel'] as const
@@ -23,8 +27,6 @@ export const FORMAT_LIMITS: Record<ShippingFormat, { maxWeightG: number, maxThic
 export const PACKING = {
   card: { weightG: 1.8, thicknessMm: 0.32 },
   sleeve: { weightG: 0.5, thicknessMm: 0.1 },
-  /** Karten ab diesem Stückpreis kommen zusätzlich in einen Toploader */
-  toploaderFromCents: 300,
   toploader: { weightG: 5, thicknessMm: 1.7 },
   envelope: { weightG: 6, thicknessMm: 0.5 },
   /** Pappe zum Verstärken, wenn keine Karte im Toploader steckt */
@@ -37,10 +39,25 @@ export const PACKING = {
   sealedWeightG: 400,
 }
 
+/** Verpackungspauschale in Cent, immer zusätzlich zum Porto: je Sendung nach Format, dazu je Toploader. */
+export const PACKAGING_COST = {
+  /** Brief: Umschlag, Hüllen, Pappe */
+  letterCents: 30,
+  /** Paket: Karton, Polster, Klebeband */
+  parcelCents: 100,
+  toploaderCents: 20,
+}
+
+/** Verpackungskosten einer Sendung im gewählten Format. */
+export const packagingCost = (format: ShippingFormat, toploaders: number) =>
+  (format === 'parcel' ? PACKAGING_COST.parcelCents : PACKAGING_COST.letterCents) + toploaders * PACKAGING_COST.toploaderCents
+
 export type PackageItem = {
   kind: 'single' | 'sealed'
   quantity: number
   unitPriceCents: number
+  /** Der Verkäufer verschickt diese Karte im Toploader (Angabe am Angebot); bei Sealed ohne Bedeutung */
+  toploader?: boolean
 }
 
 export type PackageEstimate = {
@@ -69,7 +86,7 @@ export const estimatePackage = (items: PackageItem[]): PackageEstimate => {
       continue
     }
     cards += item.quantity
-    const inToploader = item.unitPriceCents >= PACKING.toploaderFromCents
+    const inToploader = item.toploader === true
     if (inToploader) toploaders += item.quantity
     weight += item.quantity * (PACKING.card.weightG + PACKING.sleeve.weightG + (inToploader ? PACKING.toploader.weightG : 0))
     // Toploader liegen nebeneinander-gestapelt; Karte + Hülle steckt darin und zählt nicht extra
@@ -159,19 +176,29 @@ export type ShippingQuote = {
   service: string
   format: ShippingFormat
   tracked: boolean
+  /** Was der Käufer für den Versand zahlt: Porto + Verpackung */
   priceCents: number
+  /** Porto der Versandart */
+  postageCents: number
+  /** Verpackungspauschale (Umschlag bzw. Karton, Toploader) */
+  packagingCents: number
+  toploaders: number
   weightG: number
   thicknessMm: number
 }
 
 /**
- * Versand für eine Sendung automatisch berechnen: Gewicht und Dicke schätzen und die günstigste
- * passende Versandart aus dem Tarif wählen. Null, wenn nichts passt (z.B. Ziel außerhalb der EU).
+ * Versand für eine Sendung automatisch berechnen: Gewicht und Dicke schätzen, die günstigste passende Versandart
+ * aus dem Tarif wählen und die Verpackungspauschale aufschlagen. Null, wenn nichts passt (z.B. Ziel außerhalb der EU).
  */
 export const quoteShipping = (items: PackageItem[], originCountry: string, destinationCountry: string): ShippingQuote | null => {
   const pkg = estimatePackage(items)
   const option = chooseShipping(shippingTariff(originCountry), pkg, destinationCountry)
-  return option
-    ? { service: option.name, format: option.format, tracked: option.tracked, priceCents: option.priceCents, weightG: pkg.weightG, thicknessMm: pkg.thicknessMm }
-    : null
+  if (!option) return null
+  const packagingCents = packagingCost(option.format, pkg.toploaders)
+  return {
+    service: option.name, format: option.format, tracked: option.tracked,
+    priceCents: option.priceCents + packagingCents, postageCents: option.priceCents, packagingCents,
+    toploaders: pkg.toploaders, weightG: pkg.weightG, thicknessMm: pkg.thicknessMm,
+  }
 }

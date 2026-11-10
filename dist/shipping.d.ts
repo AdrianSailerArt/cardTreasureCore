@@ -15,8 +15,6 @@ export declare const PACKING: {
         weightG: number;
         thicknessMm: number;
     };
-    /** Karten ab diesem Stückpreis kommen zusätzlich in einen Toploader */
-    toploaderFromCents: number;
     toploader: {
         weightG: number;
         thicknessMm: number;
@@ -37,10 +35,22 @@ export declare const PACKING: {
     /** Sealed-Produkte (Booster, Displays …) gehen grundsätzlich als Paket */
     sealedWeightG: number;
 };
+/** Verpackungspauschale in Cent, immer zusätzlich zum Porto: je Sendung nach Format, dazu je Toploader. */
+export declare const PACKAGING_COST: {
+    /** Brief: Umschlag, Hüllen, Pappe */
+    letterCents: number;
+    /** Paket: Karton, Polster, Klebeband */
+    parcelCents: number;
+    toploaderCents: number;
+};
+/** Verpackungskosten einer Sendung im gewählten Format. */
+export declare const packagingCost: (format: ShippingFormat, toploaders: number) => number;
 export type PackageItem = {
     kind: 'single' | 'sealed';
     quantity: number;
     unitPriceCents: number;
+    /** Der Verkäufer verschickt diese Karte im Toploader (Angabe am Angebot); bei Sealed ohne Bedeutung */
+    toploader?: boolean;
 };
 export type PackageEstimate = {
     weightG: number;
@@ -81,12 +91,18 @@ export type ShippingQuote = {
     service: string;
     format: ShippingFormat;
     tracked: boolean;
+    /** Was der Käufer für den Versand zahlt: Porto + Verpackung */
     priceCents: number;
+    /** Porto der Versandart */
+    postageCents: number;
+    /** Verpackungspauschale (Umschlag bzw. Karton, Toploader) */
+    packagingCents: number;
+    toploaders: number;
     weightG: number;
     thicknessMm: number;
 };
 /**
- * Versand für eine Sendung automatisch berechnen: Gewicht und Dicke schätzen und die günstigste
- * passende Versandart aus dem Tarif wählen. Null, wenn nichts passt (z.B. Ziel außerhalb der EU).
+ * Versand für eine Sendung automatisch berechnen: Gewicht und Dicke schätzen, die günstigste passende Versandart
+ * aus dem Tarif wählen und die Verpackungspauschale aufschlagen. Null, wenn nichts passt (z.B. Ziel außerhalb der EU).
  */
 export declare const quoteShipping: (items: PackageItem[], originCountry: string, destinationCountry: string) => ShippingQuote | null;

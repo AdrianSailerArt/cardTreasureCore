@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'bun:test'
-import { chooseShipping, estimatePackage, FORMAT_LIMITS, quoteShipping, rejectReason, shippingTariff } from '../src/shipping'
+import { chooseShipping, estimatePackage, FORMAT_LIMITS, PACKAGING_COST, packagingCost, quoteShipping, rejectReason, shippingTariff } from '../src/shipping'
 
 const options = shippingTariff('DE')
 const pick = (items: Parameters<typeof estimatePackage>[0], country = 'DE') =>
@@ -14,10 +14,23 @@ describe('estimatePackage', () => {
     expect(pkg.thicknessMm).toBeGreaterThan(2)
   })
 
-  test('wertvolle Karten kommen in den Toploader', () => {
-    const pkg = estimatePackage([{ kind: 'single', quantity: 2, unitPriceCents: 1500 }])
+  test('Toploader nur, wenn der Verkäufer ihn am Angebot angibt (nicht nach Preis)', () => {
+    expect(estimatePackage([{ kind: 'single', quantity: 2, unitPriceCents: 1500 }]).toploaders).toBe(0)
+    const pkg = estimatePackage([{ kind: 'single', quantity: 2, unitPriceCents: 1500, toploader: true }])
     expect(pkg.toploaders).toBe(2)
     expect(pkg.thicknessMm).toBeCloseTo(2 * 1.7 + 0.5 + 1, 5)
+  })
+
+  test('eine Karte im Toploader ist schwerer als ohne', () => {
+    const plain = estimatePackage([{ kind: 'single', quantity: 4, unitPriceCents: 50 }])
+    const loaded = estimatePackage([{ kind: 'single', quantity: 4, unitPriceCents: 50, toploader: true }])
+    // 4 Toploader zu 5 g statt einer Pappe zu 6 g, plus Puffer
+    expect(loaded.weightG).toBeGreaterThan(plain.weightG)
+    expect(loaded.weightG).toBe(Math.ceil((6 + 4 * (1.8 + 0.5 + 5)) * 1.15))
+  })
+
+  test('Toploader bei Sealed zählt nicht', () => {
+    expect(estimatePackage([{ kind: 'sealed', quantity: 1, unitPriceCents: 500, toploader: true }]).toploaders).toBe(0)
   })
 
   test('Gewicht ist immer etwas mehr als die nackten Karten', () => {
@@ -34,7 +47,7 @@ describe('chooseShipping', () => {
   })
 
   test('eine Karte im Toploader passt noch in den Standardbrief', () => {
-    expect(pick([{ kind: 'single', quantity: 1, unitPriceCents: 800 }])).toBe('Standardbrief')
+    expect(pick([{ kind: 'single', quantity: 1, unitPriceCents: 800, toploader: true }])).toBe('Standardbrief')
   })
 
   test('mehrere Karten wechseln in größere Formate', () => {
@@ -44,7 +57,7 @@ describe('chooseShipping', () => {
 
   test('die Dicke entscheidet auch bei geringem Gewicht', () => {
     // drei Toploader sind zu dick für den Standardbrief (max. 5 mm)
-    const pkg = estimatePackage([{ kind: 'single', quantity: 3, unitPriceCents: 400 }])
+    const pkg = estimatePackage([{ kind: 'single', quantity: 3, unitPriceCents: 400, toploader: true }])
     expect(pkg.thicknessMm).toBeGreaterThan(FORMAT_LIMITS.standard.maxThicknessMm)
     expect(rejectReason(options.find(o => o.name === 'Standardbrief')!, pkg, 'DE')).not.toBeNull()
   })
@@ -70,7 +83,16 @@ describe('chooseShipping', () => {
 describe('quoteShipping', () => {
   test('liefert Versandart und Preis automatisch', () => {
     const quote = quoteShipping([{ kind: 'single', quantity: 1, unitPriceCents: 50 }], 'DE', 'DE')
-    expect(quote).toMatchObject({ service: 'Standardbrief', format: 'standard', priceCents: 95, tracked: false })
+    expect(quote).toMatchObject({ service: 'Standardbrief', format: 'standard', postageCents: 95, packagingCents: 30, priceCents: 125, tracked: false })
+  })
+
+  test('Verpackung kommt immer aufs Porto: Brief, Paket und je Toploader', () => {
+    const letter = quoteShipping([{ kind: 'single', quantity: 2, unitPriceCents: 50, toploader: true }], 'DE', 'DE')!
+    expect(letter.packagingCents).toBe(PACKAGING_COST.letterCents + 2 * PACKAGING_COST.toploaderCents)
+    expect(letter.priceCents).toBe(letter.postageCents + letter.packagingCents)
+    const parcel = quoteShipping([{ kind: 'sealed', quantity: 1, unitPriceCents: 500 }], 'DE', 'DE')!
+    expect(parcel).toMatchObject({ format: 'parcel', postageCents: 699, packagingCents: PACKAGING_COST.parcelCents, priceCents: 799 })
+    expect(packagingCost('maxi', 0)).toBe(PACKAGING_COST.letterCents)
   })
 
   test('ins EU-Ausland wird der internationale Tarif genommen', () => {
