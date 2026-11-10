@@ -10,7 +10,7 @@ export interface CreatorCard {
   printings: (PickablePrinting & { languages: string[], hasFirstEdition: boolean, trendCents: number | null, prices: Price[] })[]
 }
 /** Was beim Anlegen an die App geht */
-export type CreatorInput = ListingValues & { printingId: string, comment: string | null, storageLocation: string | null }
+export type CreatorInput = Omit<ListingValues, 'comment' | 'storageLocation'> & { printingId: string, comment: string | null, storageLocation: string | null }
 
 /**
  * Angebot anlegen in drei Schritten, gleich in Shop (Kunden) und CMS (Angebote von CardTreasure):
